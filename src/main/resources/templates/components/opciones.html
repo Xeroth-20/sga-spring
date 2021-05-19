@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Opciones</title>
+    </head>
+    <body>
+
+        <!-- Opciones grado-->
+        <th:block th:fragment="opciones-grado">
+            <option th:value="null" selected>
+                --Selecciona un grado--
+            </option>
+            <option th:each="grado : ${grados}"
+                    th:value="${grado.id}"
+                    th:text="${grado.nombre}">
+            </option>
+        </th:block>
+
+        <!-- Opciones curso-->
+        <th:block th:fragment="opciones-curso">
+            <option th:value="null" selected>
+                --Selecciona un curso--
+            </option>
+            <option th:each="curso : ${cursos}"
+                    th:value="${curso.id}"
+                    th:text="${curso.nombre}">
+            </option>
+        </th:block>
+
+    </body>
+</html>

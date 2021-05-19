@@ -1,0 +1,167 @@
+/* Root */
+.root {
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar-container {
+    flex: 0 0 auto;
+    position: static;
+
+    width: 325px;
+}
+
+.sidebar {
+    color: #fff;
+    background-color: #1a1a2e;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 325px;
+    height: 100%;
+}
+
+.menu {
+    background-color: inherit;
+}
+
+.menu-item {
+    background-color: inherit;
+    cursor: pointer;
+    display: block;
+    font-size: 1rem;
+    position: relative;
+    z-index: 1;
+    transition: background-color 0.2s;
+    user-select: none;
+
+    padding: 0.85rem 1.75rem;
+}
+
+.menu-item:hover {
+    color: inherit;
+}
+
+.menu-item .icon,
+.menu-item .menu-primary {
+    line-height: 1.5em;
+}
+
+.menu-item .left {
+    width: 30px;
+}
+
+.menu-item:hover {
+    background-color: #16213e;
+}
+
+.jx-collapse {
+    opacity: 0;
+    position: absolute;
+    z-index: 0;
+    transform: scaleY(0);
+    transform-origin: -50% 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.jx-collapse.active {
+    opacity: 1;
+    position: relative;
+    transform: scaleY(1);
+}
+
+.divider {
+    background-color: #0f3460;
+
+    height: 1px;
+}
+
+/* Content */
+.main-content {
+    flex: 1 0 auto;
+}
+
+.content {
+    background-color: #fff;
+    border-top: 1px solid rgba(0,0,0,.125);
+
+    padding: 1.75rem;
+}
+
+.spacer {
+    background-color: #f8f8f8;
+
+    height: 3rem;
+}
+
+/* App-bar */
+.app-bar {
+    background-color: white;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+
+    padding: 0.85rem 1.75rem;
+}
+
+.app-bar-title {
+    font-size: 1.5rem;
+
+    margin-bottom: 0;
+}
+
+/* Table */
+.table-container {
+    overflow-x: auto;
+}
+
+.jx-table {
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    border-left: 6px solid #0069d9;
+    border-collapse: collapse;
+}
+
+.jx-table table, .jx-table thead, .jx-table tbody, .jx-table tr {
+    width: 100%;
+}
+
+.jx-table-toolbar,
+.jx-table thead tr,
+.jx-table tbody tr:not(:last-child) {
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.jx-table-toolbar, .jx-table th, .jx-table td {
+    padding: 1rem 1.4rem;
+}
+
+/* Form */
+.jx-form {
+    max-width: 450px;
+}
+
+/* Login form */
+.login-content {
+    display: flex;
+    flex-flow: column;
+
+    width: 100%;
+    height: 100vh;
+}
+
+.login-content .top {
+    background-color: #1a1a2e;
+    flex: 1 0 50%;
+}
+
+.login-content .bottom {
+    background-color: #fff;
+    display: flex;
+    flex: 1 0 50%;
+    justify-content: center;
+}
+
+.login-form {
+    margin-top: -200px;
+    min-width: 325px;
+}

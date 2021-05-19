@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="/index::head('Secciones')">
+    </head>
+    <body>
+        <div class="root">
+            <!-- Sidebar -->
+            <div th:replace="~{components/app-menu::sidebar}"></div>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <!-- App-bar -->
+                <header class="header">
+                    <div th:replace="~{components/app-menu::app-bar('SECCIONES ESCOLARES')}">
+                    </div>
+                </header>
+                <div class="spacer"></div>
+                <div class="content">
+                    <h2 class="text-primary">Tabla de secciones escolares</h2>
+                    <div class="table-container">
+                        <div class="jx-table">
+                            <div class="jx-table-toolbar">
+                                <div class="row">
+                                    <div class="col">
+                                        <a th:href="@{/academico/secciones/registrar}" class="btn btn-primary">
+                                            Registrar seccion escolar
+                                        </a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <form method="post">
+                                            <div class="form-row">
+                                                <div class="col-auto">
+                                                    <input class="form-control" name="nombre" type="text" placeholder="Nombre"/>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Año escolar</th>
+                                        <th scope="col">Grado</th>
+                                        <th scope="col">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="seccion : ${secciones}">
+                                        <th th:text="${seccion.id}" scope="row"></th>
+                                        <td th:text="${seccion.nombre}"></td>
+                                        <td th:text="${seccion.grado.anoEscolar.nombre}"></td>
+                                        <td th:text="${seccion.grado.nombre}"></td>
+                                        <td th:text="${seccion.estado}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <th:block th:replace="/index::scripts">
+        </th:block>
+    </body>
+</html>

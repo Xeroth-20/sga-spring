@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:fragment="head(title)">
+        <!-- Meta tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="UTF-8"/>
+
+        <!-- Title -->
+        <title th:text="|${title ?: 'Inicio'}${' | SGA'}|"></title>
+
+        <!-- CSS -->
+        <link rel="preconnect" type="text/css" href="https://fonts.gstatic.com"/>
+        <link rel="stylesheet" type="text/css"
+              href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/all.min.css}"/>
+    </head>
+    <body>
+        <div class="root">
+            <!-- Sidebar -->
+            <div th:replace="~{components/app-menu::sidebar}"></div>
+
+            <!-- Main content -->
+            <main class="content">
+                <!-- App-bar -->
+                <header class="header">
+                    <div th:replace="~{components/app-menu::app-bar('INICIO')}">
+                    </div>
+                </header>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <th:block th:fragment="scripts">
+            <script type="application/javascript" th:src="@{/js/index.js}"></script>
+        </th:block>
+    </body>
+</html>

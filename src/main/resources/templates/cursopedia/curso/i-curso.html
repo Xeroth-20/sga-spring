@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="/index::head('Cursos')">
+    </head>
+    <body>
+        <div class="root">
+            <!-- Sidebar -->
+            <div th:replace="~{components/app-menu::sidebar}"></div>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <!-- App-bar -->
+                <header class="header">
+                    <div th:replace="~{components/app-menu::app-bar('CURSOS')}">
+                    </div>
+                </header>
+                <div class="spacer"></div>
+                <div class="content">
+                    <h2 class="text-primary">Tabla de cursos</h2>
+                    <div class="table-container">
+                        <div class="jx-table">
+                            <div class="jx-table-toolbar">
+                                <div class="row">
+                                    <div class="col">
+                                        <a th:href="@{/cursopedia/cursos/registrar}" class="btn btn-primary">
+                                            Registrar curso
+                                        </a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <form method="post">
+                                            <div class="form-row">
+                                                <div class="col-auto">
+                                                    <input class="form-control" name="nombre" type="text" placeholder="Nombre"/>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <button class="btn btn-outline-primary" type="submit">Buscar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Grado</th>
+                                        <th scope="col">Minimo aprobatorio</th>
+                                        <th scope="col">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="curso : ${cursos}">
+                                        <th th:text="${curso.id}" scope="row"></th>
+                                        <td th:text="${curso.nombre}"></td>
+                                        <td th:text="${curso.grado.nombre}"></td>
+                                        <td th:text="${curso.minimoAprobatorio}"></td>
+                                        <td th:text="${curso.estado}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <th:block th:replace="/index::scripts">
+        </th:block>
+    </body>
+</html>

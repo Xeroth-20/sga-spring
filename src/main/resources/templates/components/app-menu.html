@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>AppMenu</title>
+    </head>
+    <body>
+
+        <div th:fragment="sidebar" class="sidebar-container">
+            <nav class="sidebar">
+                <div style="background-color: inherit; position: relative; z-index: 1; height: 55px;"></div>
+                <div class="menu" role="menu">
+                    <div th:replace="~{::menu-item('Académico', 'school', '#academico')}">
+                    </div>
+                    <div th:replace="~{::collapse('academico', ~{::#academico-menu-items})}">
+                        <th:block id="academico-menu-items">
+                            <a th:replace="~{::menu-item-link('Años escolares', 'calendar', '/academico/anos-escolares')}"></a>
+                            <a th:replace="~{::menu-item-link('Periodos', 'cube', '/academico/periodos')}"></a>
+                            <a th:replace="~{::menu-item-link('Grados', 'star', '/academico/grados')}"></a>
+                            <a th:replace="~{::menu-item-link('Secciones', 'users', '/academico/secciones')}"></a>
+                        </th:block>
+                    </div>
+                    <div th:replace="~{::menu-item('Cursopedia', 'book-reader', '#cursopedia')}"></div>
+                    <div th:replace="~{::collapse('cursopedia', ~{::#cursopedia-menu-items})}">
+                        <th:block id="cursopedia-menu-items">
+                            <a th:replace="~{::menu-item-link('Cursos', 'book', '/cursopedia/cursos')}"></a>
+                            <a th:replace="~{::menu-item-link('Criterios de evaluación', 'stamp', '/cursopedia/criterios')}"></a>
+                            <a th:replace="~{::menu-item-link('Horarios', 'clock', '/cursopedia/horarios')}"></a>
+                        </th:block>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div th:fragment="menu-item(name, icon, dataTarget)"
+             th:data-target="${dataTarget}"
+             class="menu-item" role="menuitem" data-toggler="collapse">
+            <div class="row">
+                <div th:if="${icon != null}" class="col-auto">
+                    <i th:classappend="|fa-${icon}|" class="fa icon left text-accent"></i>
+                </div>
+                <div class="col">
+                    <span th:text="${name}" class="menu-primary"></span>
+                </div>
+                <div class="col-auto">
+                    <i class="fa fa-caret-down icon text-accent"></i>
+                </div>
+            </div>
+        </div>
+
+        <a th:fragment="menu-item-link(name, icon, link)"
+           th:href="@{${link}}"
+           class="menu-item" role="menuitem">
+            <div class="row">
+                <div th:if="${icon != null}" class="col-auto">
+                    <i th:classappend="|fa-${icon}|" class="fa icon left text-accent"></i>
+                </div>
+                <div class="col">
+                    <span th:text="${name}" class="menu-primary"></span>
+                </div>
+            </div>
+        </a>
+
+        <div th:fragment="collapse(id, menuItems)" th:id="${id}" class="jx-collapse">
+            <div class="divider"></div>
+            <div th:insert="${menuItems}" class="menu" role="menu">
+            </div>
+        </div>
+
+        <div th:fragment="app-bar(title)" class="app-bar">
+            <h1 class="app-bar-title text-primary" th:text="${title}"></h1>
+        </div>
+
+    </body>
+</html>
