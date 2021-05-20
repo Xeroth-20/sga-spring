@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="/index::head('Docentes')">
+    </head>
+    <body>
+        <div class="root">
+            <!-- Sidebar -->
+            <div th:replace="~{components/app-menu::sidebar}"></div>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <!-- App-bar -->
+                <header class="header">
+                    <div th:replace="~{components/app-menu::app-bar('DOCENTES')}">
+                    </div>
+                </header>
+                <div class="spacer"></div>
+                <div class="content">
+                    <h2 class="text-primary">Tabla de docentes</h2>
+                    <div class="table-container">
+                        <div class="jx-table">
+                            <div class="jx-table-toolbar">
+                                <div class="row">
+                                    <div class="col">
+                                        <a th:href="@{/docentes/registrar}" class="btn btn-primary">
+                                            Registrar docente
+                                        </a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <form method="post">
+                                            <div class="form-row">
+                                                <div class="col-auto">
+                                                    <input class="form-control" name="nombre" type="text" placeholder="Nombre"/>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <button class="btn btn-outline-primary" type="submit">Buscar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nombres</th>
+                                        <th scope="col">Apellido paterno</th>
+                                        <th scope="col">Apellido materno</th>
+                                        <th scope="col">DNI</th>
+                                        <th scope="col">Telefono</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="docente : ${docentes}">
+                                        <th th:text="${docente.id}" scope="row"></th>
+                                        <td th:text="${docente.persona.nombres}"></td>
+                                        <th:block th:object="${docente}">
+                                            <td th:text="*{persona.apellidoPaterno}"></td>
+                                            <td th:text="*{persona.apellidoMaterno}"></td>
+                                            <td th:text="*{persona.dni}"></td>
+                                            <td th:text="${docente.persona.telefonos.size() gt 0
+                                                ? docente.persona.telefonos[0].numero : ''}">
+                                            </td>
+                                        </th:block>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <th:block th:replace="/index::scripts">
+        </th:block>
+    </body>
+</html>

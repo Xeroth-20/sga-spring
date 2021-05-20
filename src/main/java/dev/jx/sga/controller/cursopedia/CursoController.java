@@ -13,7 +13,7 @@ import dev.jx.sga.service.AnoEscolarService;
 import dev.jx.sga.service.GradoService;
 
 @Controller
-@RequestMapping(value="/cursopedia/cursos")
+@RequestMapping(value = "/cursopedia/cursos")
 public class CursoController {
 
     @Autowired

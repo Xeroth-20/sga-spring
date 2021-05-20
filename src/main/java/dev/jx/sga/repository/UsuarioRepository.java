@@ -8,5 +8,6 @@ import dev.jx.sga.entity.Usuario;
 
 @Repository
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
+
     public Optional<Usuario> findByAliasAndClave(String alias, String clave);
 }

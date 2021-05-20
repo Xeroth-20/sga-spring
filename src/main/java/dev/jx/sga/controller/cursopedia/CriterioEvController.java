@@ -11,7 +11,7 @@ import dev.jx.sga.service.CriterioEvService;
 import dev.jx.sga.service.AnoEscolarService;
 
 @Controller
-@RequestMapping(value="/cursopedia/criterios")
+@RequestMapping(value = "/cursopedia/criterios")
 public class CriterioEvController {
 
     @Autowired

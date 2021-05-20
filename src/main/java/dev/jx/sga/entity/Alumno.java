@@ -16,10 +16,45 @@ public class Alumno implements Serializable {
     @OneToMany(mappedBy = "alumno")
     private List<NotaCurso> notasCurso;
 
-    @OneToOne(optional = false)
+    @OneToOne(cascade = CascadeType.PERSIST, optional = false)
     @JoinColumn(name = "per_id", unique = true)
     private Persona persona;
 
     @Column(name = "alu_estado", nullable = false)
     private String estado;
+
+    public Alumno() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<NotaCurso> getNotasCurso() {
+        return notasCurso;
+    }
+
+    public void setNotasCurso(List<NotaCurso> notasCurso) {
+        this.notasCurso = notasCurso;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }
