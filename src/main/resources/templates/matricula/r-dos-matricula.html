@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
-    <head th:replace="/index::head('Registrar')">
+    <head th:replace="~{/index::head('Registrar')}">
     </head>
     <body>
         <div class="root">
@@ -11,25 +11,27 @@
             <main class="main-content">
                 <!-- App-bar -->
                 <header class="header">
-                    <div th:replace="~{components/app-menu::app-bar('CURSOS')}">
+                    <div th:replace="~{components/app-menu::app-bar('MATRICULAS')}">
                     </div>
                 </header>
                 <div class="spacer"></div>
                 <div class="content">
-                    <h2 class="text-primary">Registrar curso</h2>
-                    <form th:object="${curso}" class="jx-form" method="post">
+                    <span class="text-muted">Paso 2 de 2</span>
+                    <h2 class="text-primary">Registrar matricula</h2>
+                    <form th:object="${matricula}" class="jx-form" method="post">
                         <div class="card">
                             <div class="card-body">
+                                <input th:field="*{alumno}" hidden/>
                                 <div class="form-group">
-                                    <label>Nombre</label>
-                                    <input th:field="*{nombre}" class="form-control" type="text"/>
+                                    <label>Alumno DNI</label>
+                                    <input th:field="*{alumno.persona.dni}" class="form-control" type="text" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>Año escolar</label>
-                                    <select id="anoEscolar" class="form-control" onchange="getGradosByAnoEscolarId(event)">
-                                        <option th:value="null" selected>
-                                            --Selecciona un año escolar--
-                                        </option>
+                                    <select th:field="*{anoEscolar}"
+                                            class="form-control"
+                                            onchange="getGradosByAnoEscolarId(event)">
+                                        <option th:value="null" selected>--Selecciona un año escolar--</option>
                                         <option th:each="anoEscolar : ${anosEscolares}"
                                                 th:value="${anoEscolar.id}"
                                                 th:text="${anoEscolar.nombre}">
@@ -38,13 +40,20 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Grado</label>
-                                    <select th:field="*{grado}" class="form-control" disabled>
-                                        <div th:replace="~{components/opciones::opciones-grado}"></div>
+                                    <select th:field="*{grado}"
+                                            class="form-control"
+                                            onchange="getSeccionesByGradoId(event)"
+                                            disabled>
+                                        <div th:replace="~{/components/opciones::opciones-grado}">
+                                        </div>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Minimo aprobatorio</label>
-                                    <input th:field="*{minimoAprobatorio}" class="form-control" type="text">
+                                    <label>Sección</label>
+                                    <select th:field="*{seccion}" class="form-control" disabled>
+                                        <div th:replace="~{/components/opciones::opciones-seccion}">
+                                        </div>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Estado</label>
@@ -72,7 +81,7 @@
         </div>
 
         <!-- Scripts -->
-        <th:block th:replace="/index::scripts">
+        <th:block th:replace="~{/index::scripts}">
         </th:block>
     </body>
 </html>

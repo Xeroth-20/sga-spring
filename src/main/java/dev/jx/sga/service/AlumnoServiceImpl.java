@@ -2,10 +2,12 @@ package dev.jx.sga.service;
 
 import java.util.Optional;
 import java.time.LocalDate;
+
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import dev.jx.sga.entity.Alumno;
+import dev.jx.sga.entity.Persona;
 import dev.jx.sga.repository.AlumnoRepository;
 
 @Service
@@ -17,9 +19,10 @@ public class AlumnoServiceImpl implements AlumnoService {
     @Override
     @Transactional
     public <S extends Alumno> S save(S object) {
-        object.getPersona().setFechaRegistro(LocalDate.now());
-        object.getPersona().getTelefonos().forEach((telefono) -> {
-            telefono.setPersona(object.getPersona());
+        Persona persona = object.getPersona();
+        persona.setFechaRegistro(LocalDate.now());
+        persona.getTelefonos().forEach((telefono) -> {
+            telefono.setPersona(persona);
         });
         return this.alumnoRepository.save(object);
     }
@@ -28,6 +31,11 @@ public class AlumnoServiceImpl implements AlumnoService {
     @Transactional(readOnly = true)
     public Optional<Alumno> findById(Long id) {
         return this.alumnoRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Alumno> findAlumnoByPersona_Dni(String dni) {
+        return alumnoRepository.findAlumnoByPersona_Dni(dni);
     }
 
     @Override

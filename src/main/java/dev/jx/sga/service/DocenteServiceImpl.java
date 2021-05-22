@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import dev.jx.sga.entity.Docente;
+import dev.jx.sga.entity.Persona;
+import dev.jx.sga.entity.Usuario;
 import dev.jx.sga.repository.DocenteRepository;
 import dev.jx.sga.repository.UsuarioRolRepository;
 
@@ -23,16 +25,16 @@ public class DocenteServiceImpl implements DocenteService {
     @Override
     @Transactional
     public <S extends Docente> S save(S object) {
-        object.getPersona().setFechaRegistro(LocalDate.now());
-        object.getPersona().getTelefonos().forEach((telefono) -> {
-            telefono.setPersona(object.getPersona());
+        Persona persona = object.getPersona();
+        Usuario usuario = persona.getUsuario();
+        persona.setFechaRegistro(LocalDate.now());
+        persona.getTelefonos().forEach((telefono) -> {
+            telefono.setPersona(persona);
         });
-        object.getPersona().getUsuario().setPersona(object.getPersona());
-        object.getPersona().getUsuario().setFechaRegistro(LocalDateTime.now());
-        object.getPersona().getUsuario().setEstado("Habilitado");
-        this.usuarioRolRepository.findByNombre("Docente").ifPresent((usuarioRol) -> {
-            object.getPersona().getUsuario().setRol(usuarioRol);
-        });
+        usuario.setPersona(persona);
+        usuario.setFechaRegistro(LocalDateTime.now());
+        usuario.setEstado("Habilitado");
+        this.usuarioRolRepository.findByNombre("Docente").ifPresent(usuario::setRol);
 
         return this.docenteRepository.save(object);
     }

@@ -17,6 +17,17 @@
             </option>
         </th:block>
 
+        <!-- Opciones seccion-->
+        <th:block th:fragment="opciones-seccion">
+            <option th:value="null" selected>
+                --Selecciona una sección--
+            </option>
+            <option th:each="seccion : ${secciones}"
+                    th:value="${seccion.id}"
+                    th:text="${seccion.nombre}">
+            </option>
+        </th:block>
+
         <!-- Opciones curso-->
         <th:block th:fragment="opciones-curso">
             <option th:value="null" selected>

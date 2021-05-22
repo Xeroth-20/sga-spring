@@ -22,7 +22,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Año escolar</label>
-                                    <select id="anoEscolar" class="form-control" onchange="handleAnoEscolarChange(event)">
+                                    <select id="anoEscolar" class="form-control" onchange="getGradosByAnoEscolarId(event)">
                                         <option th:value="null" selected>
                                             --Selecciona un año escolar--
                                         </option>
@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Grado</label>
-                                    <select id="grado" class="form-control" onchange="handleGradoChange(event)" disabled>
+                                    <select id="grado" class="form-control" onchange="getCursosByGradoId(event)" disabled>
                                         <div th:replace="~{components/opciones::opciones-grado}"></div>
                                     </select>
                                 </div>

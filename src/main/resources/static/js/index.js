@@ -18,33 +18,48 @@ const enableGoBackBtns = () => {
     });
 };
 
-const handleAnoEscolarChange = ({ target }) => {
-    const gradoSelect = document.querySelector('#grado');
+const getGradosByAnoEscolarId = ({ target }) => {
+    const selectInput = document.querySelector('#grado');
     if (target.value) {
         fetch(`/academico/grados/opciones?ano-escolar-id=${target.value}`, {
             method: 'get'
         }).then((res) => res.text())
             .then((data) => {
-                gradoSelect.innerHTML = data;
-                gradoSelect.disabled = false;
+                selectInput.innerHTML = data;
+                selectInput.disabled = false;
             });
     } else {
-        gradoSelect.disabled = true;
+        selectInput.disabled = true;
     }
 };
 
-const handleGradoChange = ({ target }) => {
-    const gradoSelect = document.querySelector('#curso');
+const getSeccionesByGradoId = ({ target }) => {
+    const selectInput = document.querySelector('#seccion');
+    if (target.value) {
+        fetch(`/academico/secciones/opciones?grado-id=${target.value}`, {
+            method: 'get'
+        }).then((res) => res.text())
+            .then((data) => {
+                selectInput.innerHTML = data;
+                selectInput.disabled = false;
+            });
+    } else {
+        selectInput.disabled = true;
+    }
+};
+
+const getCursosByGradoId = ({ target }) => {
+    const selectInput = document.querySelector('#curso');
     if (target.value) {
         fetch(`/cursopedia/cursos/opciones?grado-id=${target.value}`, {
             method: 'get'
         }).then((res) => res.text())
             .then((data) => {
-                gradoSelect.innerHTML = data;
-                gradoSelect.disabled = false;
+                selectInput.innerHTML = data;
+                selectInput.disabled = false;
             });
     } else {
-        gradoSelect.disabled = true;
+        selectInput.disabled = true;
     }
 };
 

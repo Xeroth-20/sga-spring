@@ -10,6 +10,8 @@ import dev.jx.sga.entity.Seccion;
 import dev.jx.sga.entity.AnoEscolar;
 import dev.jx.sga.service.SeccionService;
 import dev.jx.sga.service.AnoEscolarService;
+import dev.jx.sga.service.GradoService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "/academico/secciones")
@@ -20,6 +22,9 @@ public class SeccionController {
 
     @Autowired
     private AnoEscolarService anoEscolarService;
+
+    @Autowired
+    private GradoService gradoService;
 
     @GetMapping("")
     public String getSecciones(Model model) {
@@ -40,5 +45,13 @@ public class SeccionController {
     public String postRegistrarSeccion(Seccion seccion) {
         this.seccionService.save(seccion);
         return "redirect:/academico/secciones";
+    }
+
+    @GetMapping("/opciones")
+    public String getOpcionesSeccion(@RequestParam("grado-id") Long id, Model model) {
+        this.gradoService.findById(id).ifPresent((grado) -> {
+            model.addAttribute("secciones", grado.getSecciones());
+        });
+        return "/components/opciones :: opciones-seccion";
     }
 }
