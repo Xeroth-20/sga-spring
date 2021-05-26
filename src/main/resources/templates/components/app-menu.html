@@ -24,6 +24,7 @@
                     <div th:replace="~{::collapse('cursopedia', ~{::#cursopedia-menu-items})}">
                         <th:block id="cursopedia-menu-items">
                             <a th:replace="~{::menu-item-link('Cursos', 'book', '/cursopedia/cursos')}"></a>
+                            <a th:replace="~{::menu-item-link('Cursos docente', 'book-reader', '/cursopedia/cursos-docente')}"></a>
                             <a th:replace="~{::menu-item-link('Criterios de evaluación', 'stamp', '/cursopedia/criterios')}"></a>
                             <a th:replace="~{::menu-item-link('Horarios', 'clock', '/cursopedia/horarios')}"></a>
                         </th:block>
@@ -72,8 +73,11 @@
             </div>
         </div>
 
-        <div th:fragment="app-bar(title)" class="app-bar">
-            <h1 class="app-bar-title text-primary" th:text="${title}"></h1>
+        <div th:fragment="app-bar(title, link)" class="app-bar">
+            <h1 class="app-bar-title text-primary">
+                <a th:href="@{${link}}" th:text="${title}">
+                </a>
+            </h1>
         </div>
 
     </body>

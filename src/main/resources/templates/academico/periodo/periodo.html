@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="~{/index::head(${periodo.nombre})}">
+    </head>
+    <body>
+        <div class="root">
+            <!-- Sidebar -->
+            <div th:replace="~{components/app-menu::sidebar}"></div>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <!-- App-bar -->
+                <header class="header">
+                    <div th:replace="~{components/app-menu::app-bar('PERIODOS ESCOLARES', '/academico/periodos')}">
+                    </div>
+                </header>
+                <div class="spacer"></div>
+                <div class="content">
+                    <small class="text-muted">Periodo escolar</small>
+                    <h2 th:text="${periodo.nombre}" class="text-primary"></h2>
+                    <div class="info">
+                        <div class="row">
+                            <div class="col-auto">
+                                <small class="text-muted">
+                                    Año escolar
+                                </small>
+                                <div class="field">
+                                    <a th:href="@{/academico/anos-escolares/{id}(id=${periodo.anoEscolar.id})}"
+                                       th:text="${periodo.anoEscolar.nombre}"
+                                       class="btn-link">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <th:block th:replace="~{/index::scripts}">
+        </th:block>
+    </body>
+</html>

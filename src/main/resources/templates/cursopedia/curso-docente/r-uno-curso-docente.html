@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="/index::head('Registrar')">
+    </head>
+    <body>
+        <div class="root">
+            <!-- Sidebar -->
+            <div th:replace="~{components/app-menu::sidebar}"></div>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <!-- App-bar -->
+                <header class="header">
+                    <div th:replace="~{components/app-menu::app-bar('CURSOS DOCENTE')}">
+                    </div>
+                </header>
+                <div class="spacer"></div>
+                <div class="content">
+                    <span class="text-muted">Paso 1 de 2</span>
+                    <h2 class="text-primary">Registrar curso docente</h2>
+                    <form class="jx-form" method="get">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>DNI del docente</label>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <input name="docente-dni" class="form-control" type="text"/>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button class="btn btn-outline-primary" type="submit">
+                                                Buscar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:object="${docente}" class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>DNI</label>
+                                    <input th:field="*{persona.dni}" class="form-control" type="text" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nombres</label>
+                                    <input th:field="*{persona.nombres}" class="form-control" type="text" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Apellido paterno</label>
+                                    <input th:field="*{persona.apellidoPaterno}" class="form-control" type="text" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Apellido materno</label>
+                                    <input th:field="*{persona.apellidoMaterno}" class="form-control" type="text" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <a th:href="@{/cursopedia/cursos-docente/registrar/paso-dos(docente-dni=*{persona.dni})}"
+                                               class="btn btn-primary btn-block">
+                                                Siguiente paso
+                                            </a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button class="btn btn-outline-info btn-block go-back-btn" type="button">
+                                                Volver atrás
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <th:block th:replace="/index::scripts">
+        </th:block>
+    </body>
+</html>

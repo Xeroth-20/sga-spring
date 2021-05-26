@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="~{/index::head('Años Escolares')}">
+    </head>
+    <body>
+        <div class="root">
+            <!-- Sidebar -->
+            <div th:replace="~{components/app-menu::sidebar}"></div>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <!-- App-bar -->
+                <header class="header">
+                    <div th:replace="~{components/app-menu::app-bar('AÑOS ESCOLARES', '/academico/anos-escolares')}">
+                    </div>
+                </header>
+                <div class="spacer"></div>
+                <div class="content">
+                    <h2 class="text-primary">Tabla de años escolares</h2>
+                    <div class="table-container">
+                        <div class="jx-table">
+                            <div class="jx-table-toolbar">
+                                <div class="row">
+                                    <div class="col">
+                                        <a th:href="@{/academico/anos-escolares/registrar}" class="btn btn-primary">
+                                            Registrar año escolar
+                                        </a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <form method="post">
+                                            <div class="form-row">
+                                                <div class="col-auto">
+                                                    <input class="form-control" name="nombre" type="text" placeholder="Nombre"/>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <button class="btn btn-outline-primary" type="submit">Buscar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Fecha de inicio</th>
+                                        <th scope="col">Fecha de cierre</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="anoEscolar : ${anosEscolares}">
+                                        <th th:text="${anoEscolar.id}" scope="row"></th>
+                                        <td th:text="${anoEscolar.nombre}"></td>
+                                        <td th:text="${anoEscolar.fechaInicio}"></td>
+                                        <td th:text="${anoEscolar.fechaCierre}"></td>
+                                        <td th:text="${anoEscolar.estado}"></td>
+                                        <td th:with="baseUrl = @{/academico/anos-escolares/{id}(id=${anoEscolar.id})}">
+                                            <div class="form-row">
+                                                <div class="col-auto">
+                                                    <a th:href="${baseUrl}" class="btn btn-primary">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a th:href="|${baseUrl}/editar|" class="btn btn-success">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a th:href="|${baseUrl}/remover|" class="btn btn-outline-danger">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <th:block th:replace="~{/index::scripts}">
+        </th:block>
+    </body>
+</html>

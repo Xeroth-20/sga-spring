@@ -3,15 +3,10 @@ package dev.jx.sga.controller.academico;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import dev.jx.sga.entity.Grado;
 import dev.jx.sga.service.GradoService;
 import dev.jx.sga.service.AnoEscolarService;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.websocket.server.PathParam;
 
 @Controller
 @RequestMapping(value = "/academico/grados")
@@ -26,7 +21,15 @@ public class GradoController {
     @GetMapping("")
     public String getGrados(Model model) {
         model.addAttribute("grados", this.gradoService.findAll());
-        return "/academico/grado/i-grado";
+        return "/academico/grado/inicio";
+    }
+
+    @GetMapping("{id}")
+    public String getGrados(@PathVariable Long id, Model model) {
+        this.gradoService.findById(id).ifPresent((grado) -> {
+            model.addAttribute("grado", grado);
+        });
+        return "/academico/grado/grado";
     }
 
     @GetMapping("/registrar")
@@ -34,11 +37,27 @@ public class GradoController {
         model.addAttribute("grado", new Grado());
         model.addAttribute("anosEscolares", this.anoEscolarService.findAll());
 
-        return "/academico/grado/r-grado";
+        return "/academico/grado/registrar";
     }
 
     @PostMapping("/registrar")
     public String postRegistrarGrado(Grado grado) {
+        this.gradoService.save(grado);
+        return "redirect:/academico/grados";
+    }
+
+    @GetMapping("/{id}/editar")
+    public String getEditarGrado(@PathVariable Long id, Model model) {
+        this.gradoService.findById(id).ifPresent((grado) -> {
+            model.addAttribute("grado", grado);
+            model.addAttribute("anosEscolares", this.anoEscolarService.findAll());
+        });
+
+        return "/academico/grado/editar";
+    }
+
+    @PostMapping("/{id}/editar")
+    public String postEditarGrado(Grado grado) {
         this.gradoService.save(grado);
         return "redirect:/academico/grados";
     }

@@ -47,6 +47,12 @@ public class DocenteServiceImpl implements DocenteService {
 
     @Override
     @Transactional(readOnly = true)
+    public Optional<Docente> findDocenteByPersona_Dni(String dni) {
+        return this.docenteRepository.findDocenteByPersona_Dni(dni);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Iterable<Docente> findAll() {
         return this.docenteRepository.findAll();
     }

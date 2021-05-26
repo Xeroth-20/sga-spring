@@ -52,9 +52,7 @@ public class MatriculaController {
             Model model
     ) {
         Matricula matricula = new Matricula();
-        this.alumnoService.findAlumnoByPersona_Dni(dni).ifPresent((alumno) -> {
-            matricula.setAlumno(alumno);
-        });
+        this.alumnoService.findAlumnoByPersona_Dni(dni).ifPresent(matricula::setAlumno);
         model.addAttribute("matricula", matricula);
         model.addAttribute("anosEscolares", this.anoEscolarService.findAll());
 

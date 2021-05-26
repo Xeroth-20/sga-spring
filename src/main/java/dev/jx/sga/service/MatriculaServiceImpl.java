@@ -32,6 +32,11 @@ public class MatriculaServiceImpl implements MatriculaService {
     }
 
     @Override
+    public Iterable<Matricula> findAllBySeccion_Id(Long id) {
+        return this.matriculaRepository.findAllBySeccion_Id(id);
+    }
+
+    @Override
     public long count() {
         return this.matriculaRepository.count();
     }

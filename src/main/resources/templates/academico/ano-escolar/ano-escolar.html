@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="~{/index::head(${anoEscolar.nombre})}">
+    </head>
+    <body>
+        <div class="root">
+            <!-- Sidebar -->
+            <div th:replace="~{components/app-menu::sidebar}"></div>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <!-- App-bar -->
+                <header class="header">
+                    <div th:replace="~{components/app-menu::app-bar('AÑOS ESCOLARES', '/academico/anos-escolares')}">
+                    </div>
+                </header>
+                <div class="spacer"></div>
+                <div class="content">
+                    <small class="text-muted">Año escolar</small>
+                    <h2 th:text="${anoEscolar.nombre}" class="text-primary"></h2>
+                    <div class="info">
+                        <div class="row">
+                            <div class="col-auto">
+                                <small class="text-muted">Fecha de inicio</small>
+                                <div th:text="${anoEscolar.fechaInicio}" class="field">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <small class="text-muted">Fecha de cierre</small>
+                                <div th:text="${anoEscolar.fechaCierre}" class="field">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <small class="text-muted">Estado</small>
+                                <div th:text="${anoEscolar.estado}" class="field">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="jx-divider"></div>
+                    <div class="items">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="item">
+                                    <div th:switch="${anoEscolar.periodos.size() != 0}" class="list-group">
+                                        <h4>Periodos</h4>
+                                        <th:block th:case="true">
+                                            <a th:each="periodo : ${anoEscolar.periodos}"
+                                               th:href="@{/academico/periodos/{id}(id=${periodo.id})}"
+                                               th:text="${periodo.nombre}"
+                                               class="list-group-item">
+                                            </a>
+                                        </th:block>
+                                        <div th:case="false" class="list-group-item">
+                                            No se han encontrado periodos.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="item">
+                                    <div th:switch="${anoEscolar.grados.size() != 0}" class="list-group">
+                                        <h4>Grados</h4>
+                                        <th:block th:case="true">
+                                            <a th:each="grado : ${anoEscolar.grados}"
+                                               th:href="@{/academico/grados/{id}(id=${grado.id})}"
+                                               th:text="${grado.nombre}"
+                                               class="list-group-item">
+                                            </a>
+                                        </th:block>
+                                        <div th:case="false" class="list-group-item">
+                                            No se han encontrado grados.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <th:block th:replace="~{/index::scripts}">
+        </th:block>
+    </body>
+</html>

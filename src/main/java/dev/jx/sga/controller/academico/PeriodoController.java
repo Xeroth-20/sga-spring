@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import dev.jx.sga.entity.Periodo;
 import dev.jx.sga.service.PeriodoService;
 import dev.jx.sga.service.AnoEscolarService;
@@ -23,7 +24,15 @@ public class PeriodoController {
     @GetMapping("")
     public String getPeriodos(Model model) {
         model.addAttribute("periodos", this.periodoService.findAll());
-        return "/academico/periodo/i-periodo";
+        return "/academico/periodo/inicio";
+    }
+
+    @GetMapping("{id}")
+    public String getPeriodo(@PathVariable Long id, Model model) {
+        this.periodoService.findById(id).ifPresent((periodo) -> {
+            model.addAttribute("periodo", periodo);
+        });
+        return "/academico/periodo/periodo";
     }
 
     @GetMapping("/registrar")
@@ -31,11 +40,26 @@ public class PeriodoController {
         model.addAttribute("periodo", new Periodo());
         model.addAttribute("anosEscolares", this.anoEscolarService.findAll());
 
-        return "/academico/periodo/r-periodo";
+        return "/academico/periodo/registrar";
     }
 
     @PostMapping("/registrar")
     public String postRegistrarPeriodo(Periodo periodo) {
+        this.periodoService.save(periodo);
+        return "redirect:/academico/periodos";
+    }
+
+    @GetMapping("/{id}/editar")
+    public String getEditarPeriodo(@PathVariable Long id, Model model) {
+        this.periodoService.findById(id).ifPresent((periodo) -> {
+            model.addAttribute("periodo", periodo);
+            model.addAttribute("anosEscolares", this.anoEscolarService.findAll());
+        });
+        return "/academico/periodo/editar";
+    }
+
+    @PostMapping("/{id}/editar")
+    public String postEditarPeriodo(Periodo periodo) {
         this.periodoService.save(periodo);
         return "redirect:/academico/periodos";
     }

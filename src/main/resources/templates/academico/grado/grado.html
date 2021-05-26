@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="~{/index::head(${grado.nombre})}">
+    </head>
+    <body>
+        <div class="root">
+            <!-- Sidebar -->
+            <div th:replace="~{components/app-menu::sidebar}"></div>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <!-- App-bar -->
+                <header class="header">
+                    <div th:replace="~{components/app-menu::app-bar('GRADOS ESCOLARES', '/academico/grados')}">
+                    </div>
+                </header>
+                <div class="spacer"></div>
+                <div class="content">
+                    <small class="text-muted">Grado escolar</small>
+                    <h2 th:text="${grado.nombre}" class="text-primary"></h2>
+                    <div class="info">
+                        <div class="row">
+                            <div class="col-auto">
+                                <small class="text-muted">Año escolar</small>
+                                <div class="field">
+                                    <a th:href="@{/academico/anos-escolares/{id}(id=${grado.anoEscolar.id})}"
+                                       th:text="${grado.anoEscolar.nombre}"
+                                       class="btn-link">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <small class="text-muted">Estado</small>
+                                <div th:text="${grado.estado}" class="field">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="jx-divider"></div>
+                    <div class="items">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="item">
+                                    <div th:switch="${grado.secciones.size() != 0}" class="list-group">
+                                        <h4>Secciones</h4>
+                                        <th:block th:case="true">
+                                            <a th:each="seccion : ${grado.secciones}"
+                                               th:href="@{/academico/secciones/{id}(id=${seccion.id})}"
+                                               th:text="${seccion.nombre}"
+                                               class="list-group-item">
+                                            </a>
+                                        </th:block>
+                                        <div th:case="false" class="list-group-item">
+                                            No se han encontrado secciones.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="item">
+                                    <div th:switch="${grado.cursos.size() != 0}" class="list-group">
+                                        <h4>Cursos</h4>
+                                        <th:block th:case="true">
+                                            <a th:each="curso : ${grado.cursos}"
+                                               th:href="@{/cursopedia/cursos/{id}(id=${curso.id})}"
+                                               th:text="${curso.nombre}"
+                                               class="list-group-item">
+                                            </a>
+                                        </th:block>
+                                        <div th:case="false" class="list-group-item">
+                                            No se han encontrado cursos.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <th:block th:replace="~{/index::scripts}">
+        </th:block>
+    </body>
+</html>

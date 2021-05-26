@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="~{/index::head('Editar')}">
+    </head>
+    <body>
+        <div class="root">
+            <!-- Sidebar -->
+            <div th:replace="~{components/app-menu::sidebar}"></div>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <!-- App-bar -->
+                <header class="header">
+                    <div th:replace="~{components/app-menu::app-bar('SECCIONES ESCOLARES', '/academico/secciones')}">
+                    </div>
+                </header>
+                <div class="spacer"></div>
+                <div class="content">
+                    <h2 class="text-primary">Editar sección escolar</h2>
+                    <form th:object="${seccion}" class="jx-form" method="post">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Nombre</label>
+                                    <input th:field="*{nombre}" class="form-control" type="text"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Año escolar</label>
+                                    <select th:field="*{grado.anoEscolar}" class="form-control" onchange="getGradosByAnoEscolarId(event)">
+                                        <option th:value="null" selected>
+                                            --Selecciona un año escolar--
+                                        </option>
+                                        <option th:each="anoEscolar : ${anosEscolares}"
+                                                th:value="${anoEscolar.id}"
+                                                th:text="${anoEscolar.nombre}">
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Grado</label>
+                                    <select th:field="*{grado}" class="form-control">
+                                        <div th:replace="~{components/opciones::opciones-grado}"></div>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Capacidad</label>
+                                    <input th:field="*{capacidad}" class="form-control" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label>Estado</label>
+                                    <input th:field="*{estado}" class="form-control" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <button class="btn btn-primary btn-block" type="submit">
+                                                Guardar cambios
+                                            </button>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button class="btn btn-outline-info btn-block go-back-btn" type="button">
+                                                Volver atrás
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <th:block th:replace="~{/index::scripts}">
+        </th:block>
+    </body>
+</html>

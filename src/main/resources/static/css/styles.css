@@ -140,7 +140,7 @@
     max-width: 450px;
 }
 
-/* Login form */
+/* Login */
 .login-content {
     display: flex;
     flex-flow: column;
@@ -164,4 +164,12 @@
 .login-form {
     margin-top: -200px;
     min-width: 325px;
+}
+
+/* Utilities */
+.jx-divider {
+    background-color: rgba(000, 000, 000, 0.12);
+
+    margin: 1rem 0;
+    height: 1px;
 }

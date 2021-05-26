@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="~{/index::head(${seccion.nombre})}">
+    </head>
+    <body>
+        <div class="root">
+            <!-- Sidebar -->
+            <div th:replace="~{components/app-menu::sidebar}"></div>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <!-- App-bar -->
+                <header class="header">
+                    <div th:replace="~{components/app-menu::app-bar('SECCIONES ESCOLARES', '/academico/secciones')}">
+                    </div>
+                </header>
+                <div class="spacer"></div>
+                <div class="content">
+                    <small class="text-muted">Seccion escolar</small>
+                    <h2 th:text="${seccion.nombre}" class="text-primary"></h2>
+                    <div class="info">
+                        <div class="row">
+                            <div class="col-auto">
+                                <small class="text-muted">Año escolar</small>
+                                <div class="field">
+                                    <a th:href="@{/academico/anos-escolares/{id}(id=${seccion.grado.anoEscolar.id})}"
+                                       th:text="${seccion.grado.anoEscolar.nombre}"
+                                       class="btn-link">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <small class="text-muted">Grado escolar</small>
+                                <div class="field">
+                                    <a th:href="@{/academico/grados/{id}(id=${seccion.grado.id})}"
+                                       th:text="${seccion.grado.nombre}"
+                                       class="btn-link">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <small class="text-muted">Capacidad</small>
+                                <div th:text="${seccion.capacidad}" class="field">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <small class="text-muted">Estado</small>
+                                <div th:text="${seccion.estado}" class="field">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="jx-divider"></div>
+                    <div class="items">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="item">
+                                    <div th:switch="${alumnos.size() != 0}" class="list-group">
+                                        <h4>Alumnos</h4>
+                                        <th:block th:case="true">
+                                            <a th:each="alumno : ${alumnos}"
+                                               th:href="@{/alumnos/{id}(id=${alumno.id})}"
+                                               th:text="|${alumno.persona.nombres} ${alumno.persona.apellidoPaterno} ${alumno.persona.apellidoMaterno}|"
+                                               class="list-group-item">
+                                            </a>
+                                        </th:block>
+                                        <div th:case="false" class="list-group-item">
+                                            No se han encontrado alumnos.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <th:block th:replace="~{/index::scripts}">
+        </th:block>
+    </body>
+</html>

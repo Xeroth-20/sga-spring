@@ -11,7 +11,7 @@ import dev.jx.sga.entity.AnoEscolar;
 import dev.jx.sga.service.AnoEscolarService;
 
 @Controller
-@RequestMapping(value="/academico/anos-escolares")
+@RequestMapping(value = "/academico/anos-escolares")
 public class AnoEscolarController {
 
     @Autowired
@@ -20,13 +20,21 @@ public class AnoEscolarController {
     @GetMapping("")
     public String getAnosEscolares(Model model) {
         model.addAttribute("anosEscolares", this.anoEscolarService.findAll());
-        return "/academico/ano-escolar/i-ano-escolar";
+        return "/academico/ano-escolar/inicio";
+    }
+
+    @GetMapping("/{id}")
+    public String getAnoEscolar(@PathVariable Long id, Model model) {
+        this.anoEscolarService.findById(id).ifPresent((anoEscolar) -> {
+            model.addAttribute("anoEscolar", anoEscolar);
+        });
+        return "/academico/ano-escolar/ano-escolar";
     }
 
     @GetMapping("/registrar")
     public String getRegistrarAnoEscolar(Model model) {
         model.addAttribute("anoEscolar", new AnoEscolar());
-        return "/academico/ano-escolar/r-ano-escolar";
+        return "/academico/ano-escolar/registrar";
     }
 
     @PostMapping("/registrar")
@@ -35,24 +43,16 @@ public class AnoEscolarController {
         return "redirect:/academico/anos-escolares";
     }
 
-    @GetMapping("/{id}")
-    public String getVerAnoEscolar(@PathVariable Long id, Model model) {
-        this.anoEscolarService.findById(id).ifPresent((anoEscolar) -> {
-            model.addAttribute("anoEscolar", anoEscolar);
-        });
-        return "/academico/ano-escolar/v-ano-escolar";
-    }
-
     @GetMapping("/{id}/editar")
     public String getEditarAnoEscolar(@PathVariable Long id, Model model) {
         this.anoEscolarService.findById(id).ifPresent((anoEscolar) -> {
             model.addAttribute("anoEscolar", anoEscolar);
         });
-        return "/academico/ano-escolar/e-ano-escolar";
+        return "/academico/ano-escolar/editar";
     }
 
     @PostMapping("/{id}/editar")
-    public String postEditarAnoEscolar(@PathVariable Long id, AnoEscolar anoEscolar) {
+    public String postEditarAnoEscolar(AnoEscolar anoEscolar) {
         this.anoEscolarService.save(anoEscolar);
         return "redirect:/academico/anos-escolares";
     }

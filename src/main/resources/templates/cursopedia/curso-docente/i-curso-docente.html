@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
-    <head th:replace="/index::head('Años Escolares')">
+    <head th:replace="/index::head('Cursos Docente')">
     </head>
     <body>
         <div class="root">
@@ -11,19 +11,19 @@
             <main class="main-content">
                 <!-- App-bar -->
                 <header class="header">
-                    <div th:replace="~{components/app-menu::app-bar('AÑOS ESCOLARES')}">
+                    <div th:replace="~{components/app-menu::app-bar('CURSOS DOCENTE')}">
                     </div>
                 </header>
                 <div class="spacer"></div>
                 <div class="content">
-                    <h2 class="text-primary">Tabla de años escolares</h2>
+                    <h2 class="text-primary">Tabla de cursos de docentes</h2>
                     <div class="table-container">
                         <div class="jx-table">
                             <div class="jx-table-toolbar">
                                 <div class="row">
                                     <div class="col">
-                                        <a th:href="@{/academico/anos-escolares/registrar}" class="btn btn-primary">
-                                            Registrar año escolar
+                                        <a th:href="@{/cursopedia/cursos-docente/registrar/paso-uno}" class="btn btn-primary">
+                                            Registrar curso docente
                                         </a>
                                     </div>
                                     <div class="col-auto">
@@ -44,35 +44,46 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Fecha inicio</th>
-                                        <th scope="col">Fecha cierre</th>
-                                        <th scope="col">Estado</th>
+                                        <th scope="col">Curso</th>
+                                        <th scope="col">Docente</th>
+                                        <th scope="col">Grado</th>
+                                        <th scope="col">Sección</th>
+                                        <th scope="col">Fecha de asignación</th>
                                         <th scope="col">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="anoEscolar : ${anosEscolares}">
-                                        <th th:text="${anoEscolar.id}" scope="row"></th>
-                                        <td th:text="${anoEscolar.nombre}"></td>
-                                        <td th:text="${anoEscolar.fechaInicio}"></td>
-                                        <td th:text="${anoEscolar.fechaCierre}"></td>
-                                        <td th:text="${anoEscolar.estado}"></td>
-                                        <td th:with="baseUrl = @{/academico/anos-escolares/{id}(id=${anoEscolar.id})}">
+                                    <tr th:each="cursoDocente : ${cursosDocente}">
+                                        <td th:text="${cursoDocente.curso.nombre}"></td>
+                                        <th:block th:object="${cursoDocente.docente.persona}">
+                                            <td th:text="|*{nombres} *{apellidoPaterno} *{apellidoMaterno}|"></td>
+                                        </th:block>
+                                        <td th:text="${cursoDocente.seccion.grado.nombre}"></td>
+                                        <td th:text="${cursoDocente.seccion.nombre}"></td>
+                                        <td th:text="${cursoDocente.fechaAsignacion}"></td>
+                                        <td th:with="baseUrl = @{/cursos-docente/asignacion}">
                                             <div class="form-row">
                                                 <div class="col-auto">
-                                                    <a th:href="${baseUrl}" class="btn btn-primary text-white">
+                                                    <a th:href="@{${baseUrl}(curso-id=${cursoDocente.id.cursoId},
+                                                       seccion-id=${cursoDocente.id.seccionId},
+                                                       docente-id=${cursoDocente.id.docenteId})}"
+                                                       class="btn btn-primary text-white">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <a th:href="|${baseUrl}/editar|" class="btn btn-success text-white">
+                                                    <a th:href="@{(${baseUrl} + '/editar')(curso-id=${cursoDocente.id.cursoId},
+                                                       seccion-id=${cursoDocente.id.seccionId},
+                                                       docente-id=${cursoDocente.id.docenteId})}"
+                                                       class="btn btn-success text-white">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <a th:href="|${baseUrl}/remover|" class="btn btn-outline-danger text-danger">
+                                                    <a th:href="@{(${baseUrl} + '/remover')(curso-id=${cursoDocente.id.cursoId},
+                                                       seccion-id=${cursoDocente.id.seccionId},
+                                                       docente-id=${cursoDocente.id.docenteId})}"
+                                                       class="btn btn-outline-danger text-danger">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </div>
