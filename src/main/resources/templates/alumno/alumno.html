@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="~{/index::head(${alumno.persona.nombreCompleto})}">
+    </head>
+    <body>
+        <div class="root">
+            <!-- Sidebar -->
+            <div th:replace="~{components/app-menu::sidebar}"></div>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <!-- App-bar -->
+                <header class="header">
+                    <div th:replace="~{components/app-menu::app-bar('ALUMNOS', '/alumnos')}">
+                    </div>
+                </header>
+                <div class="spacer"></div>
+                <div class="content">
+                    <small class="text-muted">Alumno</small>
+                    <h2 th:text="${alumno.persona.nombreCompleto}" class="text-primary"></h2>
+                    <div class="info">
+                        <div th:object="${alumno}" class="row">
+                            <div class="col-auto">
+                                <small class="text-muted">
+                                    DNI
+                                </small>
+                                <div th:text="*{persona.dni}" class="field">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <small class="text-muted">
+                                    Género
+                                </small>
+                                <div th:text="*{persona.genero}" class="field">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <small class="text-muted">
+                                    Dirección
+                                </small>
+                                <div th:text="*{persona.direccion}" class="field">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <small class="text-muted">
+                                    Telefono
+                                </small>
+                                <div th:text="${not alumno.persona.telefonos.isEmpty ? alumno.persona.telefonos[0].numero : ''}"
+                                     class="field">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <small class="text-muted">
+                                    Correo
+                                </small>
+                                <div th:text="*{persona.correo}" class="field">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <small class="text-muted">
+                                    Fecha de registro
+                                </small>
+                                <div th:text="*{persona.fechaRegistro}" class="field">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <small class="text-muted">
+                                    Estado
+                                </small>
+                                <div th:text="*{estado}" class="field">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="jx-divider"></div>
+                    <form id="ano-escolar-form" class="mb-3" method="get">
+                        <div class="form-row">
+                            <div class="col-auto">
+                                <label>Año escolar</label>
+                                <select th:switch="${anosEscolares.size gt 0}"
+                                        th:disabled="${anosEscolares.isEmpty}"
+                                        class="form-control"
+                                        name="ano-escolar-id"
+                                        onchange="handleAnoEscolarIdChange()">
+                                    <th:block th:case="true">
+                                        <option th:value="${matriculaSelected.anoEscolar.id}"
+                                                th:text="${matriculaSelected.anoEscolar.nombre}"
+                                                selected>
+                                        </option>
+                                        <option th:each="anoEscolar : ${anosEscolares}"
+                                                th:value="${anoEscolar.id}"
+                                                th:text="${anoEscolar.nombre}">
+                                        </option>
+                                    </th:block>
+                                    <option th:case="false" th:value="null">
+                                        No se han encontrado años escolares.
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <th:block th:if="${matriculaSelected != null}">
+                        <div class="info mb-3">
+                            <div th:object="${matriculaSelected}" class="row">
+                                <div class="col-auto">
+                                    <small class="text-muted">Grado</small>
+                                    <div class="field">
+                                        <a th:href="@{/academico/grados/{id}(id=*{grado.id})}"
+                                           th:text="*{grado.nombre}"
+                                           class="btn-link">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <small class="text-muted">Sección</small>
+                                    <div class="field">
+                                        <a th:href="@{/academico/secciones/{id}(id=*{seccion.id})}"
+                                           th:text="*{seccion.nombre}"
+                                           class="btn-link">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <small class="text-muted">Fecha de inscripción</small>
+                                    <div th:text="*{fechaInscripcion}" class="field">
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <small class="text-muted">Estado</small>
+                                    <div th:text="*{estado}" class="field">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:object="${matriculaSelected}" class="items">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="item">
+                                        <div th:switch="*{not grado.cursos.isEmpty}" class="list-group">
+                                            <h4>Cursos</h4>
+                                            <th:block th:case="true">
+                                                <a th:each="curso : *{grado.cursos}"
+                                                   th:href="@{/cursopedia/cursos/{id}(id=${curso.id})}"
+                                                   th:text="${curso.nombre}"
+                                                   class="list-group-item">
+                                                </a>
+                                            </th:block>
+                                            <div th:case="false" class="list-group-item">
+                                                No se han encontrado cursos.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <th:block th:replace="~{/index::scripts}">
+        </th:block>
+        <script>
+            const handleAnoEscolarIdChange = () => {
+                document.querySelector("#ano-escolar-form").submit();
+            };
+        </script>
+    </body>
+</html>

@@ -14,6 +14,9 @@ public class Alumno implements Serializable {
     private Long id;
 
     @OneToMany(mappedBy = "alumno")
+    private List<Matricula> matriculas;
+
+    @OneToMany(mappedBy = "alumno")
     private List<NotaCurso> notasCurso;
 
     @OneToOne(cascade = CascadeType.PERSIST, optional = false)
@@ -32,6 +35,14 @@ public class Alumno implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(List<Matricula> matriculas) {
+        this.matriculas = matriculas;
     }
 
     public List<NotaCurso> getNotasCurso() {

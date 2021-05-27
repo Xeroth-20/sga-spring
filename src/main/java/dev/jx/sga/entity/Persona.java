@@ -43,6 +43,10 @@ public class Persona implements Serializable {
     public Persona() {
     }
 
+    public String getNombreCompleto() {
+        return String.format("%s %s %s", nombres, apellidoPaterno, apellidoMaterno).trim();
+    }
+
     public String getDni() {
         return dni;
     }

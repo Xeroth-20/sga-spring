@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
-    <head th:replace="/index::head('Alumnos')">
+    <head th:replace="~{/index::head('Alumnos')}">
     </head>
     <body>
         <div class="root">
@@ -11,7 +11,7 @@
             <main class="main-content">
                 <!-- App-bar -->
                 <header class="header">
-                    <div th:replace="~{components/app-menu::app-bar('ALUMNOS')}">
+                    <div th:replace="~{components/app-menu::app-bar('ALUMNOS', '/alumnos')}">
                     </div>
                 </header>
                 <div class="spacer"></div>
@@ -50,6 +50,7 @@
                                         <th scope="col">Apellido materno</th>
                                         <th scope="col">DNI</th>
                                         <th scope="col">Telefono</th>
+                                        <th scope="col">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,6 +65,25 @@
                                                 ? alumno.persona.telefonos[0].numero : ''}">
                                             </td>
                                         </th:block>
+                                        <td th:with="baseUrl = @{/alumnos/{id}(id=${alumno.id})}">
+                                            <div class="form-row">
+                                                <div class="col-auto">
+                                                    <a th:href="${baseUrl}" class="btn btn-primary">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a th:href="|${baseUrl}/editar|" class="btn btn-success">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a th:href="|${baseUrl}/remover|" class="btn btn-outline-danger">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -74,7 +94,7 @@
         </div>
 
         <!-- Scripts -->
-        <th:block th:replace="/index::scripts">
+        <th:block th:replace="~{/index::scripts}">
         </th:block>
     </body>
 </html>

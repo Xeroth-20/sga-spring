@@ -8,5 +8,7 @@ import dev.jx.sga.entity.MatriculaId;
 @Repository
 public interface MatriculaRepository extends CrudRepository<Matricula, MatriculaId> {
 
+    public Iterable<Matricula> findAllByAlumno_Id(Long id);
+
     public Iterable<Matricula> findAllBySeccion_Id(Long id);
 }
